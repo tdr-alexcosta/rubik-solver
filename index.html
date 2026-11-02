@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Rubik Solver 3D</title>
+
+  <link
+    rel="stylesheet"
+    href="./style.css"
+  />
+</head>
+
+<body>
+
+  <div id="app">
+
+    <!-- =====================================================
+         PANELL ESQUERRE
+    ====================================================== -->
+
+    <aside id="sidebar">
+
+      <header class="app-header">
+        <h1>Rubik Solver</h1>
+      </header>
+
+
+      <!-- =================================================
+           BARREJA
+      ================================================== -->
+
+      <section class="panel-section">
+
+        <div class="section-heading">
+
+          <span class="section-number">
+            1
+          </span>
+
+          <div>
+            <h2>Barreja</h2>
+          </div>
+
+        </div>
+
+
+        <textarea
+          id="scrambleInput"
+          rows="3"
+          spellcheck="false"
+          placeholder=""
+        ></textarea>
+
+
+        <button
+          id="scrambleBtn"
+          class="secondary-button"
+          type="button"
+        >
+          Barrejar cub
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           MÈTODES
+      ================================================== -->
+
+      <section class="panel-section">
+
+        <div class="section-heading">
+
+          <span class="section-number">
+            2
+          </span>
+
+          <div>
+            <h2>Mètodes de resolució</h2>
+          </div>
+
+        </div>
+
+
+        <div id="methodCards">
+
+
+          <!-- LBL -->
+
+          <button
+            class="method-card disabled"
+            data-method="lbl"
+            type="button"
+            disabled
+          >
+
+            <span class="method-name">
+              LBL
+            </span>
+
+            <span class="method-check">
+              ✓
+            </span>
+
+            <div class="method-tooltip">
+              <strong>Layer By Layer</strong>
+
+              <span>
+                Resol el cub capa per capa,
+                seguint una metodologia pensada
+                per ser fàcil d'entendre i seguir.
+              </span>
+            </div>
+
+          </button>
+
+
+          <!-- CFOP -->
+
+          <button
+            class="method-card disabled"
+            data-method="cfop"
+            type="button"
+            disabled
+          >
+
+            <span class="method-name">
+              CFOP
+            </span>
+
+            <span class="method-check">
+              ✓
+            </span>
+
+            <div class="method-tooltip">
+              <strong>CFOP</strong>
+
+              <span>
+                Resolució dividida en Cross,
+                F2L, OLL i PLL, basada en
+                el mètode habitual de speedcubing.
+              </span>
+            </div>
+
+          </button>
+
+
+          <!-- OPTIMAL -->
+
+          <button
+            class="method-card disabled"
+            data-method="optimal"
+            type="button"
+            disabled
+          >
+
+            <span class="method-name">
+              Optimal
+            </span>
+
+            <span class="method-check">
+              ✓
+            </span>
+
+            <div class="method-tooltip">
+              <strong>Optimal</strong>
+
+              <span>
+                Busca una seqüència amb el menor
+                nombre de moviments segons
+                la mètrica que definim.
+              </span>
+            </div>
+
+          </button>
+
+        </div>
+
+
+        <!-- ESTAT DE L'ÒPTIM -->
+
+        <div id="optimalBanner" class="optimal-banner" hidden>
+
+          <span class="optimal-icon" aria-hidden="true"></span>
+
+          <div class="optimal-text">
+            <strong id="optimalTitle">Calculant la solució òptima</strong>
+            <span id="optimalDetail">Cerca en segon pla</span>
+          </div>
+
+          <span id="optimalTime" class="optimal-time"></span>
+
+          <button id="optimalStopBtn" class="optimal-stop" type="button">
+            Aturar
+          </button>
+
+          <div class="optimal-bar" aria-hidden="true"></div>
+
+        </div>
+
+
+
+        <button
+          id="solveBtn"
+          class="solve-button"
+          type="button"
+        >
+          Calcular solucions
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           SOLUCIÓ
+      ================================================== -->
+
+      <section
+        id="solutionPanel"
+        class="panel-section solution-panel"
+      >
+
+        <div class="solution-header">
+
+          <div>
+
+            <span class="eyebrow">
+              SOLUCIÓ
+            </span>
+
+            <h2 id="selectedMethodTitle">
+              —
+            </h2>
+
+          </div>
+
+
+          <span
+            id="solutionStatus"
+            class="status-badge"
+          >
+            Esperant
+          </span>
+
+        </div>
+
+
+        <div class="solution-moves">
+
+          <div id="solutionSequence">
+            —
+          </div>
+
+        </div>
+
+
+        <div class="playback-controls">
+
+          <button
+            id="previousStepBtn"
+            type="button"
+            title="Moviment anterior"
+            disabled
+          >
+            |◀
+          </button>
+
+          <button
+            id="playSolutionBtn"
+            type="button"
+            title="Reproduir / pausar"
+            disabled
+          >
+            ▶
+          </button>
+
+          <button
+            id="nextStepBtn"
+            type="button"
+            title="Moviment següent"
+            disabled
+          >
+            ▶|
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           ESTAT
+      ================================================== -->
+
+      <div id="status">
+
+        <span class="status-dot"></span>
+
+        <span id="statusText">
+          Introdueix una barreja.
+        </span>
+
+      </div>
+
+
+    </aside>
+
+
+    <!-- =====================================================
+         CUB 3D
+    ====================================================== -->
+
+    <main id="cube-area">
+
+      <div id="cube-container"></div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =======================================================
+       THREE.JS
+  ======================================================== -->
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+    }
+  }
+  </script>
+
+
+  <script
+    type="module"
+    src="./js/main.js"
+  ></script>
+
+</body>
+
+</html>

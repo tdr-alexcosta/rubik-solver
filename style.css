@@ -1,0 +1,883 @@
+/* =========================================================
+   GENERAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #111;
+  color: white;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  background: #111;
+}
+
+
+/* =========================================================
+   PANELL ESQUERRE
+========================================================= */
+
+#sidebar {
+  width: 43%;
+  min-width: 520px;
+  height: 100%;
+
+  padding: 38px 42px 28px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+
+  background: #111;
+
+  border-right: 1px solid #292929;
+
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.app-header {
+  margin-bottom: 34px;
+}
+
+.app-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 750;
+
+  letter-spacing: -0.8px;
+}
+
+
+/* =========================================================
+   SECCIONS
+========================================================= */
+
+.panel-section {
+  margin-bottom: 22px;
+
+  padding: 21px;
+
+  border: 1px solid #2d2d2d;
+  border-radius: 16px;
+
+  background: #161616;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 18px;
+}
+
+.section-number {
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #292929;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   BARREJA
+========================================================= */
+
+#scrambleInput {
+  width: 100%;
+
+  min-height: 82px;
+
+  resize: vertical;
+
+  padding: 13px;
+
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #0d0d0d;
+
+  color: white;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+#scrambleInput:focus {
+  border-color: #666;
+}
+
+
+/* =========================================================
+   BOTÓ BARREJAR
+========================================================= */
+
+.secondary-button {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 11px;
+
+  border: 1px solid #383838;
+  border-radius: 9px;
+
+  background: #1b1b1b;
+
+  color: #ddd;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.secondary-button:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+
+  background: #151515;
+
+  border-color: #292929;
+}
+
+.secondary-button:not(:disabled):hover {
+  background: #242424;
+  border-color: #555;
+}
+
+
+/* =========================================================
+   MÈTODES
+========================================================= */
+
+#methodCards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.method-card {
+  position: relative;
+
+  min-height: 72px;
+
+  padding: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #333;
+  border-radius: 12px;
+
+  background: #121212;
+
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.method-card:hover:not(:disabled) {
+  background: #1b1b1b;
+
+  transform: translateY(-1px);
+}
+
+.method-card:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.method-card.selected {
+  border-color: #777;
+
+  background: #202020;
+}
+
+.method-name {
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.method-check {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #555;
+  border-radius: 50%;
+
+  color: transparent;
+
+  font-size: 11px;
+}
+
+.method-card.selected .method-check {
+  background: white;
+
+  border-color: white;
+
+  color: #111;
+}
+
+
+/* =========================================================
+   TOOLTIP
+========================================================= */
+
+.method-tooltip {
+  position: absolute;
+
+  left: 50%;
+  bottom: calc(100% + 12px);
+
+  width: 230px;
+
+  padding: 13px;
+
+  border: 1px solid #3b3b3b;
+  border-radius: 10px;
+
+  background: #1b1b1b;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.45);
+
+  color: #aaa;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translate(-50%, 6px);
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+/*
+  Apareix després de 0,6 segons
+  quan mantens el ratolí a sobre.
+*/
+
+.method-card:hover .method-tooltip {
+  animation:
+    showTooltip
+    0.15s
+    ease-out
+    0.6s
+    forwards;
+}
+
+@keyframes showTooltip {
+
+  to {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+      translate(-50%, 0);
+  }
+
+}
+
+.method-tooltip strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: white;
+
+  font-size: 12px;
+}
+
+.method-tooltip span {
+  display: block;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CALCULAR SOLUCIONS
+========================================================= */
+
+.solve-button {
+  width: 100%;
+
+  margin-top: 13px;
+
+  padding: 14px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #f2f2f2;
+
+  color: #111;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+
+.solve-button:hover {
+  background: white;
+
+  transform: translateY(-1px);
+}
+
+.solve-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   SOLUCIÓ
+========================================================= */
+
+.solution-panel {
+  margin-bottom: 18px;
+}
+
+.solution-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 17px;
+}
+
+.eyebrow {
+  color: #777;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.solution-header h2 {
+  margin: 3px 0 0;
+
+  font-size: 20px;
+}
+
+.status-badge {
+  padding: 5px 9px;
+
+  border: 1px solid #333;
+  border-radius: 20px;
+
+  color: #777;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   SEQÜÈNCIA
+========================================================= */
+
+.solution-moves {
+  padding: 13px;
+
+  border-radius: 9px;
+
+  background: #0d0d0d;
+}
+
+#solutionSequence {
+  min-height: 24px;
+
+  color: #ddd;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  word-break: break-word;
+
+  /* Respecta els salts de línia de STEP 1, STEP 2... */
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   PLAYBACK
+========================================================= */
+
+.playback-controls {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 12px;
+}
+
+.playback-controls button {
+  width: 36px;
+  height: 30px;
+
+  border: 1px solid #333;
+  border-radius: 7px;
+
+  background: #191919;
+
+  color: #aaa;
+
+  cursor: pointer;
+}
+
+.playback-controls button:not(:disabled):hover {
+  background: #292929;
+
+  color: white;
+}
+
+.playback-controls button:disabled {
+  opacity: 0.35;
+
+  cursor: default;
+}
+
+
+/* =========================================================
+   SOLUCIÓ: PASSOS I MOVIMENTS
+========================================================= */
+
+.sol-step {
+  margin-top: 12px;
+
+  color: #666;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.sol-step:first-child {
+  margin-top: 0;
+}
+
+.sol-line {
+  line-height: 1.9;
+}
+
+.sol-move {
+  display: inline-block;
+
+  padding: 0 4px;
+
+  border-radius: 4px;
+
+  color: #ddd;
+}
+
+.sol-move.done {
+  color: #555;
+}
+
+.sol-move.next {
+  background: #f2f2f2;
+
+  color: #111;
+
+  font-weight: 700;
+}
+
+.sol-label,
+.sol-empty {
+  color: #666;
+}
+
+.playback-controls button {
+  min-width: 44px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#status {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: auto;
+  padding-top: 15px;
+
+  color: #777;
+
+  font-size: 11px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #777;
+}
+
+
+/* =========================================================
+   CUB
+========================================================= */
+
+#cube-area {
+  position: relative;
+
+  flex: 1;
+
+  height: 100%;
+
+  overflow: hidden;
+}
+
+#cube-container {
+  position: absolute;
+
+  inset: 0;
+}
+
+#cube-container canvas {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  #app {
+    display: block;
+
+    overflow-y: auto;
+  }
+
+  #sidebar {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+
+    border-right: 0;
+  }
+
+  #cube-area {
+    height: 70vh;
+
+    min-height: 500px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  #sidebar {
+    padding: 25px 18px;
+  }
+
+  #methodCards {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header h1 {
+    font-size: 27px;
+  }
+
+}
+
+/* =========================================================
+   ESTAT DE L'ÒPTIM
+========================================================= */
+
+.optimal-banner {
+  position: relative;
+  overflow: hidden;
+
+  margin-top: 12px;
+  padding: 13px 16px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+
+  background: #151515;
+}
+
+.optimal-banner[hidden] {
+  display: none;
+}
+
+.optimal-icon {
+  flex: none;
+
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #3a3a3a;
+  border-top-color: #facc15;
+  border-radius: 50%;
+
+  animation: optimal-spin 0.8s linear infinite;
+}
+
+.optimal-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  flex: 1;
+}
+
+.optimal-text strong {
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.optimal-text span {
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.optimal-time {
+  flex: none;
+
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #9a9a9a;
+}
+
+.optimal-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background: #242424;
+}
+
+.optimal-bar::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 35%;
+  height: 100%;
+
+  background: linear-gradient(90deg, transparent, #facc15, transparent);
+
+  animation: optimal-slide 1.4s ease-in-out infinite;
+}
+
+.optimal-banner.done {
+  border-color: #245a36;
+  background: #111a14;
+}
+
+.optimal-banner.done .optimal-icon {
+  animation: none;
+
+  border: none;
+  background: #4ade80;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optimal-banner.done .optimal-icon::after {
+  content: "✓";
+
+  margin: auto;
+
+  color: #0d1a11;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+.optimal-banner.done .optimal-bar {
+  display: none;
+}
+
+.optimal-banner.failed {
+  border-color: #5a2424;
+  background: #1a1111;
+}
+
+.optimal-banner.failed .optimal-icon {
+  animation: none;
+  border-color: #ef4444;
+}
+
+.optimal-banner.failed .optimal-bar {
+  display: none;
+}
+
+@keyframes optimal-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes optimal-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+.optimal-stop {
+  flex: none;
+
+  padding: 6px 12px;
+
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+
+  background: #1d1d1d;
+  color: #ddd;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.optimal-stop:hover {
+  background: #262626;
+  border-color: #666;
+}
+
+.optimal-banner.done .optimal-stop,
+.optimal-banner.failed .optimal-stop {
+  display: none;
+}
